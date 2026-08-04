@@ -112,7 +112,7 @@ static esp_err_t index_handler(httpd_req_t *req) {
   html += "img { border: 2px solid white; margin-top: 10px; }";
   html += "</style>";
   html += "</head><body>";
-  html += "<h1> - KLM - esp32Ccam - V.2 - </h1>"; // titre de la page web
+  html += "<h1> - Surveillant - ESP32-CAM - </h1>"; // titre de la page web
   html += "<h2>Controle LED</h2>";
   html += "<button onclick=\"location.href='/led/on'\">LED ON</button>";
   html += "<button onclick=\"location.href='/led/off'\">LED OFF</button>";

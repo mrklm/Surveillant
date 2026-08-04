@@ -49,6 +49,62 @@ Dans le menu :
 
 Les reglages sont conserves dans le navigateur avec `localStorage`.
 
+## Sketch ESP32-CAM
+
+Le fichier `surveillant_esp32cam.ino` est fourni avec le projet. Il est pret a etre televerse dans une ou plusieurs ESP32-CAM, apres adaptation des informations propres a votre reseau.
+
+Avant de televerser le sketch, renseigner :
+
+- `ssid` : nom du reseau Wi-Fi ;
+- `password` : mot de passe du reseau Wi-Fi ;
+- `local_IP[3]` : numero final de l'adresse IP de la camera.
+
+Exemple :
+
+```cpp
+const char* ssid = "nom du reseau";
+const char* password = "mot de passe du reseau";
+
+local_IP[3] = 2;
+```
+
+Le sketch recupere automatiquement la passerelle et le masque en DHCP, puis force une IP fixe dans le meme sous-reseau en modifiant le dernier nombre de l'adresse.
+
+Il faut donc televerser le meme sketch sur chaque ESP32-CAM en changeant `local_IP[3]` pour donner un numero unique a chaque camera, puis reporter l'IP correspondante dans le menu de Surveillant.
+
+### Securite Des Cameras
+
+Il est fortement deconseille d'exposer directement les ESP32-CAM sur Internet.
+
+Eviter notamment :
+
+- les redirections de ports depuis la box vers les cameras ;
+- l'ouverture directe des routes `/stream`, `/capture`, `/led/on` ou `/led/off` depuis l'exterieur ;
+- l'utilisation des cameras sur un Wi-Fi public ou partage sans isolation.
+
+Les ESP32-CAM utilisent ici des routes HTTP simples, sans authentification forte ni chiffrement HTTPS. Toute personne capable d'atteindre l'adresse IP de la camera pourrait potentiellement voir le flux ou piloter la LED.
+
+Pour un acces depuis l'exterieur, preferer une solution plus sure : VPN vers le reseau local, reseau IoT separe, ou acces distant controle par un service dedie.
+
+### Reservation D'IP Sur La Box
+
+Il est conseille de reserver les adresses IP des ESP32-CAM dans l'interface de la box ou du routeur.
+
+Le principe : associer l'adresse MAC de chaque ESP32-CAM a une IP fixe, par exemple :
+
+- camera blanche : `192.168.1.2` ;
+- camera rouge : `192.168.1.3` ;
+- camera verte : `192.168.1.4`.
+
+C'est utile parce que :
+
+- Surveillant retrouve toujours les cameras au meme endroit ;
+- les IP ne changent pas apres redemarrage de la box ou des ESP32-CAM ;
+- cela evite les conflits entre deux appareils qui voudraient utiliser la meme adresse ;
+- la maintenance est plus simple quand chaque camera a une IP connue et documentee.
+
+Si une reservation DHCP est faite dans la box, verifier que le numero choisi dans `local_IP[3]` correspond bien a l'IP reservee pour cette camera.
+
 ## Compatibilite Navigateur
 
 La page fonctionne comme un fichier HTML autonome pour l'affichage et les commandes principales.
