@@ -1,5 +1,13 @@
 # Changelog
 
+## Surveillant v1.8.43 - 2026-08-04
+
+- Ajout d'un bouton `Lancer le tutoriel` dans l'aide, entre `Utilisation rapide` et `Pour les geeks`.
+- Le bouton ferme l'aide puis relance le tutoriel de configuration.
+- Incrémentation de la version affichée vers `Surveillant v1.8.43`.
+- Migration des réglages depuis `surveillant-v1.8.42-settings` vers `surveillant-v1.8.43-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.43.html`.
+
 ## Surveillant v1.8.42 - 2026-08-04
 
 - Simplification de la première étape du tutoriel Arduino.
