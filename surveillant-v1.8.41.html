@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surveillant v1.8.39</title>
-    <link rel="icon" type="image/png" href="surveillant.png">
+    <title>Surveillant v1.8.41</title>
+    <link rel="icon" type="image/png" href="assets/surveillant.png">
     <style>
         :root {
             color-scheme: dark;
@@ -571,6 +571,32 @@
             width: min(96vw, 900px);
         }
 
+        .config-dialog {
+            width: min(92vw, 420px);
+        }
+
+        .config-confirm {
+            display: grid;
+            justify-items: center;
+            gap: 14px;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .config-confirm img {
+            width: 96px;
+            height: 96px;
+            object-fit: contain;
+        }
+
+        .config-confirm p {
+            margin: 0;
+            color: var(--fg);
+            font-size: 1rem;
+            font-weight: 800;
+            line-height: 1.45;
+        }
+
         .help-about {
             border-top: 1px solid var(--line);
             padding-top: 14px;
@@ -915,8 +941,8 @@
 <body>
     <header>
         <div class="brand" onclick="toggleSurveillanceMode()" title="Mode Surveillance" aria-label="Mode Surveillance" role="button" tabindex="0">
-            <img class="app-icon" src="surveillant.png" alt="" aria-hidden="true">
-            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.39</span></h1>
+            <img class="app-icon" src="assets/surveillant.png" alt="" aria-hidden="true">
+            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.41</span></h1>
         </div>
         <span class="clock" id="clock">--/--/---- --:--:--</span>
         <div class="toolbar">
@@ -941,7 +967,7 @@
     </header>
 
     <button class="surveillance-toggle" type="button" onclick="toggleSurveillanceMode()" title="Quitter le mode Surveillance" aria-label="Quitter le mode Surveillance">
-        <img src="surveillant.png" alt="" aria-hidden="true">
+        <img src="assets/surveillant.png" alt="" aria-hidden="true">
     </button>
 
     <main>
@@ -954,6 +980,14 @@
             <button class="btn-menu" type="button" onclick="closeCamera()">Fermer</button>
         </div>
         <div class="stream" id="camera-dialog-stream"></div>
+    </dialog>
+
+    <dialog class="config-dialog" id="config-dialog">
+        <div class="config-confirm">
+            <img src="assets/surveillant.png" alt="" aria-hidden="true">
+            <p id="config-message">Fichier de configuration chargé.</p>
+            <button class="btn-main" type="button" onclick="closeConfigDialog()">OK</button>
+        </div>
     </dialog>
 
     <dialog id="menu-dialog">
@@ -1068,7 +1102,7 @@
         </div>
         <div class="help-content">
             <section class="help-hero">
-                <img class="help-logo" src="surveillant.png" alt="" aria-hidden="true">
+                <img class="help-logo" src="assets/surveillant.png" alt="" aria-hidden="true">
                 <h2 class="help-title">Surveillant</h2>
                 <p class="help-subtitle">Surveillant est un programme permettant de recuperer un ou plusieurs flux video.</p>
             </section>
@@ -1139,7 +1173,7 @@
 
             <section class="help-section help-about">
                 <h2>À propos</h2>
-                <p class="help-about-title">Surveillant v1.8.39 - Développé par Klm - contact : <a href="mailto:clementmorel@free.fr">clementmorel@free.fr</a></p>
+                <p class="help-about-title">Surveillant v1.8.41 - Développé par Klm - contact : <a href="mailto:clementmorel@free.fr">clementmorel@free.fr</a></p>
                 <p>Repo GitHub Surveillant : <a href="https://github.com/mrklm/Surveillant" target="_blank" rel="noopener">GitHub</a></p>
 
                 <h3>Autres logiciels gratuits en open source développés par Klm</h3>
@@ -1224,7 +1258,7 @@
             <div class="setup-progress" id="setup-progress">Étape 1 / 11</div>
 
             <section class="setup-step is-active">
-                <img class="setup-logo" src="surveillant.png" alt="Surveillant">
+                <img class="setup-logo" src="assets/surveillant.png" alt="Surveillant">
                 <h2>Bienvenue</h2>
                 <p>Bienvenue, voici un tutoriel explicatif afin de vous guider dans l'utilisation de Surveillant.</p>
                 <p>Les prochaines étapes vous accompagnent depuis la préparation de l'ESP32-CAM jusqu'à l'ajout de votre première caméra dans le menu.</p>
@@ -1363,12 +1397,12 @@
             "[Pouêt] Compagnie Créole": { BG: "#8B3A1A", PANEL: "#F2C94C", FIELD: "#FFFFFF", FG: "#5A2E0C", FIELD_FG: "#5A2E0C", ACCENT: "#8B3A1A" }
         };
 
-        const STORAGE_KEY = "surveillant-v1.8.39-settings";
+        const STORAGE_KEY = "surveillant-v1.8.41-settings";
         const CAPTURE_PROXY_ENDPOINT = "http://127.0.0.1:8787/capture";
         const CAPTURE_DIRECTORY_DB = "surveillant-captures";
         const CAPTURE_DIRECTORY_STORE = "handles";
         const CAPTURE_DIRECTORY_KEY = "capture-directory";
-        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.38-settings", "surveillant-v1.8.37-settings", "surveillant-v1.8.36-settings", "surveillant-v1.8.35-settings", "surveillant-v1.8.34-settings", "surveillant-v1.8.33-settings", "surveillant-v1.8.32-settings", "surveillant-v1.8.31-settings", "surveillant-v1.8.30-settings", "surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
+        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.40-settings", "surveillant-v1.8.39-settings", "surveillant-v1.8.38-settings", "surveillant-v1.8.37-settings", "surveillant-v1.8.36-settings", "surveillant-v1.8.35-settings", "surveillant-v1.8.34-settings", "surveillant-v1.8.33-settings", "surveillant-v1.8.32-settings", "surveillant-v1.8.31-settings", "surveillant-v1.8.30-settings", "surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
         const DEFAULT_THEME = "[Sombre] Midnight Garage";
         const DEFAULT_STREAM_PATH = "/stream";
         const DEFAULT_CAPTURE_PATH = "/capture";
@@ -1383,6 +1417,8 @@
         const clock = document.getElementById("clock");
         const menuDialog = document.getElementById("menu-dialog");
         const helpDialog = document.getElementById("help-dialog");
+        const configDialog = document.getElementById("config-dialog");
+        const configMessage = document.getElementById("config-message");
         const setupDialog = document.getElementById("setup-dialog");
         const setupProgress = document.getElementById("setup-progress");
         const setupDismiss = document.getElementById("setup-dismiss");
@@ -1926,7 +1962,7 @@
 
                 const placeholder = document.createElement("img");
                 placeholder.className = "stream-placeholder";
-                placeholder.src = "surveillant_off.png";
+                placeholder.src = "assets/surveillant.gif";
                 placeholder.alt = "Flux indisponible";
                 stream.appendChild(placeholder);
 
@@ -2640,6 +2676,24 @@
             helpDialog.close();
         }
 
+        function closeConfigDialog() {
+            configDialog.close();
+        }
+
+        function configDisplayName(fileName) {
+            const cleanName = String(fileName || "configuration")
+                .replace(/\.json$/i, "")
+                .replace(/_/g, " ")
+                .replace(/\b(\d{2})-(\d{2})-(\d{2,4})\b/g, "$1/$2/$3")
+                .trim();
+            return cleanName || "configuration";
+        }
+
+        function showConfigLoadedDialog(fileName) {
+            configMessage.textContent = `Fichier de configuration "${configDisplayName(fileName)}" chargé.`;
+            configDialog.showModal();
+        }
+
         function openSetupTutorial(force = false) {
             if (!force && settings.setupTutorialDismissed) {
                 return;
@@ -2742,7 +2796,7 @@
             const payload = {
                 app: "Surveillant",
                 format: "surveillant-settings",
-                version: "1.8.39",
+                version: "1.8.41",
                 exportedAt: new Date().toISOString(),
                 settings
             };
@@ -2774,7 +2828,7 @@
                         scheduleAutoRefresh();
                         updateClock();
                         persistSettings();
-                        alert("Configuration chargee.");
+                        showConfigLoadedDialog(file.name);
                     } catch (error) {
                         alert(`Configuration invalide : ${error?.message || "lecture impossible"}`);
                     }

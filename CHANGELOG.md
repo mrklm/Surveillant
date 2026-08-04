@@ -1,5 +1,23 @@
 # Changelog
 
+## Surveillant v1.8.41 - 2026-08-04
+
+- Remplacement de l'alerte navigateur après import JSON par un popup Surveillant personnalisé.
+- Affichage du logo Surveillant et du nom lisible du fichier de configuration chargé.
+- Conversion de la date du nom de fichier de configuration en format `JJ/MM/AA` dans le message.
+- Incrémentation de la version affichée vers `Surveillant v1.8.41`.
+- Migration des réglages depuis `surveillant-v1.8.40-settings` vers `surveillant-v1.8.41-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.41.html`.
+
+## Surveillant v1.8.40 - 2026-08-04
+
+- Déplacement de `surveillant.png` et `surveillant_off.png` dans le dossier `assets/`.
+- Utilisation de `assets/surveillant.gif` comme animation affichée lorsqu'un flux vidéo est indisponible.
+- Mise à jour des chemins du favicon, du logo, de l'aide, du tutoriel et du placeholder hors-ligne.
+- Incrémentation de la version affichée vers `Surveillant v1.8.40`.
+- Migration des réglages depuis `surveillant-v1.8.39-settings` vers `surveillant-v1.8.40-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.40.html`.
+
 ## Surveillant v1.8.39 - 2026-08-04
 
 - Ajout des icônes locales des projets cités dans la section `À propos` de l'aide.
