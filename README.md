@@ -58,7 +58,7 @@ Avant de televerser le sketch, renseigner :
 
 - `ssid` : nom du reseau Wi-Fi ;
 - `password` : mot de passe du reseau Wi-Fi ;
-- `local_IP[3]` : numero final de l'adresse IP de la camera.
+- `local_IP[3]` : dernier nombre de l'adresse IP attribuee a la camera.
 
 Exemple :
 
@@ -66,12 +66,18 @@ Exemple :
 const char* ssid = "nom du reseau";
 const char* password = "mot de passe du reseau";
 
-local_IP[3] = 2;
+local_IP[3] = 10;
 ```
 
-Le sketch recupere automatiquement la passerelle et le masque en DHCP, puis force une IP fixe dans le meme sous-reseau en modifiant le dernier nombre de l'adresse.
+Dans cet exemple, si la box utilise le reseau `192.168.1.x`, la camera prendra l'adresse :
 
-Il faut donc televerser le meme sketch sur chaque ESP32-CAM en changeant `local_IP[3]` pour donner un numero unique a chaque camera, puis reporter l'IP correspondante dans le menu de Surveillant.
+```text
+192.168.1.10
+```
+
+Le `10` de `local_IP[3] = 10;` correspond donc au dernier nombre de l'IP. C'est ce nombre qu'il faut changer pour chaque ESP32-CAM.
+
+Le sketch recupere automatiquement la passerelle et le masque en DHCP, puis force une IP fixe dans le meme sous-reseau. Il faut televerser le meme sketch sur chaque ESP32-CAM en changeant uniquement ce dernier nombre, puis reporter l'IP correspondante dans le menu de Surveillant.
 
 ### Securite Des Cameras
 
@@ -141,9 +147,3 @@ Surveillant suppose par defaut que les ESP32-CAM exposent :
 - `/led/off` pour eteindre la LED.
 
 Ces chemins peuvent dependre du firmware utilise.
-
-## Securite
-
-Surveillant pilote des cameras par URLs HTTP locales. Il ne chiffre pas les flux et ne protege pas les cameras par lui-meme.
-
-Il est recommande de garder les cameras sur un reseau local protege, sans redirection de port directe vers Internet.
