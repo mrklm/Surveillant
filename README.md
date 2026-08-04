@@ -2,7 +2,7 @@
 
 Surveillant est une page HTML autonome permettant de recuperer, afficher et piloter un ou plusieurs flux video ESP32-CAM sur un reseau local.
 
-La version actuelle est `v1.8.31`.
+La version actuelle est `v1.8.32`.
 
 ## Apercu
 
@@ -27,7 +27,7 @@ La version actuelle est `v1.8.31`.
 
 ## Fichiers
 
-- `surveillant-v1.8.31.html` : application principale.
+- `surveillant-v1.8.32.html` : application principale.
 - `surveillant.png` : logo et favicon.
 - `surveillant_off.png` : image affichee quand un flux video est indisponible.
 - `capture-proxy.js` : proxy local optionnel pour contourner certains blocages CORS lors des captures.
@@ -37,7 +37,7 @@ La version actuelle est `v1.8.31`.
 
 ## Utilisation
 
-Ouvrir `surveillant-v1.8.31.html` dans un navigateur.
+Ouvrir `surveillant-v1.8.32.html` dans un navigateur.
 
 Dans le menu :
 
@@ -49,6 +49,29 @@ Dans le menu :
 - enregistrer.
 
 Les reglages sont conserves dans le navigateur avec `localStorage`.
+
+## Sauvegarde De Configuration
+
+Le menu propose deux boutons pour gerer la configuration :
+
+- `Sauver` : exporte les reglages dans un fichier JSON ;
+- `Charger` : importe un fichier JSON precedemment exporte.
+
+Le fichier exporte contient les reglages de Surveillant : theme, agencement, format de date, chemins de flux/capture, delais et liste des cameras.
+
+Le nom propose par defaut suit ce format :
+
+```text
+Config_Surveillant_JJ-MM-AA.json
+```
+
+Exemple :
+
+```text
+Config_Surveillant_04-08-26.json
+```
+
+Les fichiers `Config_Surveillant_*.json` sont ignores par Git afin d'eviter de publier accidentellement une configuration personnelle contenant des IP ou libelles locaux.
 
 ## Sketch ESP32-CAM
 

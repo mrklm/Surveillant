@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surveillant v1.8.30</title>
+    <title>Surveillant v1.8.32</title>
     <link rel="icon" type="image/png" href="surveillant.png">
     <style>
         :root {
@@ -778,7 +778,7 @@
     <header>
         <div class="brand" onclick="toggleSurveillanceMode()" title="Mode Surveillance" aria-label="Mode Surveillance" role="button" tabindex="0">
             <img class="app-icon" src="surveillant.png" alt="" aria-hidden="true">
-            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.30</span></h1>
+            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.32</span></h1>
         </div>
         <span class="clock" id="clock">--/--/---- --:--:--</span>
         <div class="toolbar">
@@ -874,6 +874,17 @@
                 <div>
                     <button class="btn-main" type="button" onclick="chooseCaptureDirectory()">Choisir un dossier</button>
                     <div class="hint" id="capture-destination">Aucun dossier choisi. Les captures seront téléchargées en PNG.</div>
+                </div>
+            </div>
+
+            <div class="setting-row">
+                <span>Configuration</span>
+                <div>
+                    <div class="dialog-actions">
+                        <button class="btn-main" type="button" onclick="exportConfiguration()">Sauver</button>
+                        <button class="btn-menu" type="button" onclick="importConfiguration()">Charger</button>
+                    </div>
+                    <div class="hint">Sauve ou recharge les reglages de Surveillant dans un fichier JSON.</div>
                 </div>
             </div>
 
@@ -1009,12 +1020,12 @@
             "[Pouêt] Compagnie Créole": { BG: "#8B3A1A", PANEL: "#F2C94C", FIELD: "#FFFFFF", FG: "#5A2E0C", FIELD_FG: "#5A2E0C", ACCENT: "#8B3A1A" }
         };
 
-        const STORAGE_KEY = "surveillant-v1.8.30-settings";
+        const STORAGE_KEY = "surveillant-v1.8.32-settings";
         const CAPTURE_PROXY_ENDPOINT = "http://127.0.0.1:8787/capture";
         const CAPTURE_DIRECTORY_DB = "surveillant-captures";
         const CAPTURE_DIRECTORY_STORE = "handles";
         const CAPTURE_DIRECTORY_KEY = "capture-directory";
-        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
+        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.31-settings", "surveillant-v1.8.30-settings", "surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
         const DEFAULT_THEME = "[Sombre] Midnight Garage";
         const DEFAULT_STREAM_PATH = "/stream";
         const DEFAULT_CAPTURE_PATH = "/capture";
@@ -1562,7 +1573,7 @@
 
                 const placeholder = document.createElement("img");
                 placeholder.className = "stream-placeholder";
-                placeholder.src = "surveillant.png";
+                placeholder.src = "surveillant_off.png";
                 placeholder.alt = "Flux indisponible";
                 stream.appendChild(placeholder);
 
@@ -2282,36 +2293,125 @@
             requestAnimationFrame(fitAllStreams);
         }
 
-        function saveSettings() {
-            settings.theme = themeSelect.value;
-            settings.layout = cleanLayout(layoutSelect.value);
-            settings.streamPath = cleanPath(streamPathInput.value);
-            settings.capturePath = cleanPath(capturePathInput.value || DEFAULT_CAPTURE_PATH);
-            settings.refreshIntervalSeconds = Number(refreshIntervalSelect.value);
-            settings.staggerDelayMs = Number(staggerDelaySelect.value);
-            settings.dateFormat = cleanDateFormat(dateFormatSelect.value);
-            settings.cameras = settings.cameras.map(slot => {
-                const input = document.querySelector(`[data-camera-id="${slot.id}"]`);
-                const labelInput = document.querySelector(`[data-camera-label-id="${slot.id}"]`);
-                const previous = settings.cameras.find(camera => camera.id === slot.id);
-                return normalizeCameraSetting({
-                    id: slot.id,
-                    name: slot.name,
-                    color: slot.color,
-                    ip: cleanIp(input?.value || ""),
-                    label: labelInput?.value.trim() || "",
-                    rotation: Number(previous?.rotation || 0),
-                    mirror: Boolean(previous?.mirror)
-                });
-            });
+        function collectSettingsFromMenu() {
+            return {
+                theme: themeSelect.value,
+                layout: cleanLayout(layoutSelect.value),
+                streamPath: cleanPath(streamPathInput.value),
+                capturePath: cleanPath(capturePathInput.value || DEFAULT_CAPTURE_PATH),
+                refreshIntervalSeconds: Number(refreshIntervalSelect.value),
+                staggerDelayMs: Number(staggerDelaySelect.value),
+                dateFormat: cleanDateFormat(dateFormatSelect.value),
+                cameras: settings.cameras.map(slot => {
+                    const input = document.querySelector(`[data-camera-id="${slot.id}"]`);
+                    const labelInput = document.querySelector(`[data-camera-label-id="${slot.id}"]`);
+                    const previous = settings.cameras.find(camera => camera.id === slot.id);
+                    return normalizeCameraSetting({
+                        id: slot.id,
+                        name: slot.name,
+                        color: slot.color,
+                        ip: cleanIp(input?.value || ""),
+                        label: labelInput?.value.trim() || "",
+                        rotation: Number(previous?.rotation || 0),
+                        mirror: Boolean(previous?.mirror)
+                    });
+                })
+            };
+        }
 
+        function saveSettings() {
+            settings = collectSettingsFromMenu();
+            applySettings();
+            closeMenu();
+        }
+
+        function applySettings() {
             persistSettings();
             applyTheme(settings.theme);
             applyLayout(settings.layout);
             renderCameras();
             scheduleAutoRefresh();
             updateClock();
-            closeMenu();
+        }
+
+        function exportConfiguration() {
+            settings = collectSettingsFromMenu();
+            persistSettings();
+
+            const payload = {
+                app: "Surveillant",
+                format: "surveillant-settings",
+                version: "1.8.32",
+                exportedAt: new Date().toISOString(),
+                settings
+            };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+            downloadBlob(blob, configFileName(new Date()));
+        }
+
+        function importConfiguration() {
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = "application/json,.json";
+            input.onchange = () => {
+                const file = input.files?.[0];
+                if (!file) {
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = () => {
+                    try {
+                        const payload = JSON.parse(String(reader.result || "{}"));
+                        const importedSettings = normalizeImportedSettings(payload);
+                        settings = importedSettings;
+                        applyTheme(settings.theme);
+                        applyLayout(settings.layout);
+                        renderThemeOptions();
+                        renderCameraSettings();
+                        renderCameras();
+                        scheduleAutoRefresh();
+                        updateClock();
+                        persistSettings();
+                        alert("Configuration chargee.");
+                    } catch (error) {
+                        alert(`Configuration invalide : ${error?.message || "lecture impossible"}`);
+                    }
+                };
+                reader.onerror = () => alert("Lecture du fichier impossible.");
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function normalizeImportedSettings(payload) {
+            const source = payload?.settings || payload;
+            if (!source || typeof source !== "object") {
+                throw new Error("fichier JSON non reconnu");
+            }
+
+            const importedCameras = Array.isArray(source.cameras) && source.cameras.length > 0
+                ? source.cameras.map(normalizeCameraSetting)
+                : settings.cameras.map(normalizeCameraSetting);
+
+            return {
+                theme: THEMES[source.theme] ? source.theme : DEFAULT_THEME,
+                layout: cleanLayout(source.layout),
+                streamPath: cleanPath(source.streamPath || DEFAULT_STREAM_PATH),
+                capturePath: cleanPath(source.capturePath || DEFAULT_CAPTURE_PATH),
+                refreshIntervalSeconds: Number(source.refreshIntervalSeconds ?? DEFAULT_REFRESH_INTERVAL_SECONDS),
+                staggerDelayMs: Number(source.staggerDelayMs ?? DEFAULT_STAGGER_DELAY_MS),
+                dateFormat: cleanDateFormat(source.dateFormat),
+                cameras: importedCameras
+            };
+        }
+
+        function configFileName(date) {
+            const pad = value => String(value).padStart(2, "0");
+            const day = pad(date.getDate());
+            const month = pad(date.getMonth() + 1);
+            const year = String(date.getFullYear()).slice(-2);
+            return `Config_Surveillant_${day}-${month}-${year}.json`;
         }
 
         function resetSettings() {

@@ -1,5 +1,16 @@
 # Changelog
 
+## Surveillant v1.8.32 - 2026-08-04
+
+- Ajout de deux boutons `Sauver` et `Charger` la configuration dans le menu.
+- Export des reglages dans un fichier JSON nomme par defaut `Config_Surveillant_JJ-MM-AA.json`.
+- Import d'un fichier JSON de configuration avec application immediate et sauvegarde dans le navigateur.
+- Ajout de l'exclusion `Config_Surveillant_*.json` au `.gitignore` pour eviter de publier une configuration personnelle.
+- Mise a jour du README avec la sauvegarde de configuration.
+- Incrementation de la version affichee vers `Surveillant v1.8.32`.
+- Migration des reglages depuis `surveillant-v1.8.31-settings` vers `surveillant-v1.8.32-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.32.html`.
+
 ## Surveillant v1.8.31 - 2026-08-04
 
 - Ajout de `surveillant_off.png` comme image dediee aux flux video indisponibles.
