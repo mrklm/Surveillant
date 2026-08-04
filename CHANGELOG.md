@@ -1,5 +1,13 @@
 # Changelog
 
+## Surveillant v1.8.31 - 2026-08-04
+
+- Ajout de `surveillant_off.png` comme image dediee aux flux video indisponibles.
+- Conservation de `surveillant.png` pour le logo, le favicon et l'aide.
+- Incrementation de la version affichee vers `Surveillant v1.8.31`.
+- Migration des reglages depuis `surveillant-v1.8.30-settings` vers `surveillant-v1.8.31-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.31.html`.
+
 ## Surveillant v1.8.30 - 2026-08-04
 
 - Refonte visuelle du titre dans la barre du haut pour se rapprocher de la charte graphique du logo.
