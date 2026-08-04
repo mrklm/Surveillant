@@ -1,5 +1,14 @@
 # Changelog
 
+## Surveillant v1.8.38 - 2026-08-04
+
+- Ajout d'une section `À propos` à la fin de l'aide intégrée.
+- Ajout du contact, du lien GitHub Surveillant et des liens vers les autres logiciels open source de Klm.
+- Mise à jour du README avec la présence de cette nouvelle section d'aide.
+- Incrémentation de la version affichée vers `Surveillant v1.8.38`.
+- Migration des réglages depuis `surveillant-v1.8.37-settings` vers `surveillant-v1.8.38-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.38.html`.
+
 ## Surveillant v1.8.37 - 2026-08-04
 
 - Baisse d'environ un tiers de la luminosité du titre `Surveillant` dans la barre principale.
