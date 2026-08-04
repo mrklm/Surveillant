@@ -1,5 +1,13 @@
 # Changelog
 
+## Surveillant v1.8.37 - 2026-08-04
+
+- Baisse d'environ un tiers de la luminosité du titre `Surveillant` dans la barre principale.
+- Enregistrement et restauration des paramètres d'affichage par caméra dans la configuration JSON : rotation et miroir horizontal.
+- Incrémentation de la version affichée vers `Surveillant v1.8.37`.
+- Migration des réglages depuis `surveillant-v1.8.36-settings` vers `surveillant-v1.8.37-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.37.html`.
+
 ## Surveillant v1.8.36 - 2026-08-04
 
 - Ajout des accents manquants dans les textes visibles du tutoriel de première configuration.

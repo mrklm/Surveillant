@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surveillant v1.8.36</title>
+    <title>Surveillant v1.8.37</title>
     <link rel="icon" type="image/png" href="surveillant.png">
     <style>
         :root {
@@ -76,14 +76,14 @@
         }
 
         .brand-name {
-            color: #eaf8ff;
+            color: #9fc9dc;
             font-size: clamp(1.15rem, 2.5vw, 1.78rem);
             letter-spacing: 0;
             text-shadow:
-                0 0 2px #ffffff,
-                0 0 8px #19d7ff,
-                0 0 16px #0077ff;
-            -webkit-text-stroke: 1px #16cfff;
+                0 0 1px rgba(255, 255, 255, 0.66),
+                0 0 5px rgba(25, 215, 255, 0.66),
+                0 0 11px rgba(0, 119, 255, 0.66);
+            -webkit-text-stroke: 1px #0f8fb0;
         }
 
         .brand-version {
@@ -853,7 +853,7 @@
     <header>
         <div class="brand" onclick="toggleSurveillanceMode()" title="Mode Surveillance" aria-label="Mode Surveillance" role="button" tabindex="0">
             <img class="app-icon" src="surveillant.png" alt="" aria-hidden="true">
-            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.36</span></h1>
+            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.37</span></h1>
         </div>
         <span class="clock" id="clock">--/--/---- --:--:--</span>
         <div class="toolbar">
@@ -1053,7 +1053,7 @@
                 <p>La vignette est centrée dans un cadre noir au format 4:3. L'iframe part d'une base 320×240 puis Surveillant la met à l'échelle selon la taille disponible, afin d'éviter les barres blanches du rendu navigateur.</p>
 
                 <h3>Configuration</h3>
-                <p>Le menu presente une camera vide par defaut, puis permet d'ajouter autant de cameras que necessaire avec une couleur, une IP et un libelle. Une camera n'apparait dans la grille que si son IP est renseignée. La rotation, le miroir, le thème, les libellés, le chemin du flux, le chemin de capture, la fréquence de rafraîchissement, le délai entre caméras, l'agencement, le format de date et le choix d'affichage du tutoriel sont sauvegardés localement dans <code>localStorage</code>.</p>
+                <p>Le menu presente une camera vide par defaut, puis permet d'ajouter autant de cameras que necessaire avec une couleur, une IP et un libelle. Une camera n'apparait dans la grille que si son IP est renseignée. La rotation, le miroir horizontal, le thème, les libellés, le chemin du flux, le chemin de capture, la fréquence de rafraîchissement, le délai entre caméras, l'agencement, le format de date et le choix d'affichage du tutoriel sont sauvegardés localement dans <code>localStorage</code>.</p>
 
                 <h3>Horodatage</h3>
                 <p>L'horloge du haut est formatée en JavaScript avec <code>toLocaleString("fr-FR")</code>. Le menu permet de choisir entre un format court numérique et un format long avec le jour de la semaine et le mois en toutes lettres. Les noms de fichiers de capture gardent volontairement un format technique <code>YYYY-MM-DD_HH-MM-SS</code>, plus fiable pour le tri et compatible avec les systèmes de fichiers.</p>
@@ -1068,7 +1068,7 @@
                 <p>Le bouton capture appelle <code>http://IP/capture</code>, convertit l'image en PNG puis l'enregistre dans le dossier choisi ou la télécharge directement. Le navigateur ne donne pas le chemin complet du dossier, seulement son nom et l'autorisation d'écriture. Si l'ESP32-CAM bloque la lecture directe par CORS, Surveillant essaie automatiquement le proxy local <code>capture-proxy.js</code> sur <code>127.0.0.1:8787</code>.</p>
 
                 <h3>Affichage et transformations</h3>
-                <p>La rotation, le miroir et le zoom agrandi sont appliqués côté navigateur avec des transformations CSS. Cela ne modifie pas le flux réel envoyé par l'ESP32 : seule l'image affichée dans Surveillant est transformée.</p>
+                <p>La rotation, le miroir horizontal et le zoom agrandi sont appliqués côté navigateur avec des transformations CSS. Cela ne modifie pas le flux réel envoyé par l'ESP32 : seule l'image affichée dans Surveillant est transformée.</p>
 
                 <h3>Sécurité</h3>
                 <p>Cette page ne protège pas les caméras : elle pilote des URLs HTTP locales. Toute personne connectée au même réseau peut potentiellement appeler les mêmes URLs directement. La vraie sécurité repose sur le Wi-Fi, l'absence de redirection de port, un réseau invité isolé et, idéalement, un réseau IoT séparé ou un accès VPN pour l'extérieur.</p>
@@ -1224,12 +1224,12 @@
             "[Pouêt] Compagnie Créole": { BG: "#8B3A1A", PANEL: "#F2C94C", FIELD: "#FFFFFF", FG: "#5A2E0C", FIELD_FG: "#5A2E0C", ACCENT: "#8B3A1A" }
         };
 
-        const STORAGE_KEY = "surveillant-v1.8.36-settings";
+        const STORAGE_KEY = "surveillant-v1.8.37-settings";
         const CAPTURE_PROXY_ENDPOINT = "http://127.0.0.1:8787/capture";
         const CAPTURE_DIRECTORY_DB = "surveillant-captures";
         const CAPTURE_DIRECTORY_STORE = "handles";
         const CAPTURE_DIRECTORY_KEY = "capture-directory";
-        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.35-settings", "surveillant-v1.8.34-settings", "surveillant-v1.8.33-settings", "surveillant-v1.8.32-settings", "surveillant-v1.8.31-settings", "surveillant-v1.8.30-settings", "surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
+        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.36-settings", "surveillant-v1.8.35-settings", "surveillant-v1.8.34-settings", "surveillant-v1.8.33-settings", "surveillant-v1.8.32-settings", "surveillant-v1.8.31-settings", "surveillant-v1.8.30-settings", "surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
         const DEFAULT_THEME = "[Sombre] Midnight Garage";
         const DEFAULT_STREAM_PATH = "/stream";
         const DEFAULT_CAPTURE_PATH = "/capture";
@@ -2603,7 +2603,7 @@
             const payload = {
                 app: "Surveillant",
                 format: "surveillant-settings",
-                version: "1.8.36",
+                version: "1.8.37",
                 exportedAt: new Date().toISOString(),
                 settings
             };
