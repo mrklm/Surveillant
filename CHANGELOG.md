@@ -1,5 +1,13 @@
 # Changelog
 
+## Surveillant v1.8.42 - 2026-08-04
+
+- Simplification de la première étape du tutoriel Arduino.
+- Remplacement des consignes de support ESP32 et de sélection de carte par `Mettez à jour l'I.D.E si besoin.`
+- Incrémentation de la version affichée vers `Surveillant v1.8.42`.
+- Migration des réglages depuis `surveillant-v1.8.41-settings` vers `surveillant-v1.8.42-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.42.html`.
+
 ## Surveillant v1.8.41 - 2026-08-04
 
 - Remplacement de l'alerte navigateur après import JSON par un popup Surveillant personnalisé.
