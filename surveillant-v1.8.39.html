@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surveillant v1.8.38</title>
+    <title>Surveillant v1.8.39</title>
     <link rel="icon" type="image/png" href="surveillant.png">
     <style>
         :root {
@@ -595,6 +595,21 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
+        .help-project-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .help-project-icon {
+            width: 32px;
+            height: 32px;
+            flex: 0 0 32px;
+            border-radius: 7px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
         .help-project:last-child {
             border-bottom: 0;
         }
@@ -901,7 +916,7 @@
     <header>
         <div class="brand" onclick="toggleSurveillanceMode()" title="Mode Surveillance" aria-label="Mode Surveillance" role="button" tabindex="0">
             <img class="app-icon" src="surveillant.png" alt="" aria-hidden="true">
-            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.38</span></h1>
+            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.39</span></h1>
         </div>
         <span class="clock" id="clock">--/--/---- --:--:--</span>
         <div class="toolbar">
@@ -1124,13 +1139,16 @@
 
             <section class="help-section help-about">
                 <h2>À propos</h2>
-                <p class="help-about-title">Surveillant v1.8.38 - Développé par Klm - contact : <a href="mailto:clementmorel@free.fr">clementmorel@free.fr</a></p>
+                <p class="help-about-title">Surveillant v1.8.39 - Développé par Klm - contact : <a href="mailto:clementmorel@free.fr">clementmorel@free.fr</a></p>
                 <p>Repo GitHub Surveillant : <a href="https://github.com/mrklm/Surveillant" target="_blank" rel="noopener">GitHub</a></p>
 
                 <h3>Autres logiciels gratuits en open source développés par Klm</h3>
                 <div class="help-projects">
                     <article class="help-project">
-                        <strong>klmp3</strong>
+                        <div class="help-project-head">
+                            <img class="help-project-icon" src="assets/icons/klmp3.png" alt="" aria-hidden="true">
+                            <strong>klmp3</strong>
+                        </div>
                         <p>Application pour récupérer les audios des vidéos YouTube et Twitch.</p>
                         <div class="help-links">
                             <a href="https://github.com/mrklm/klmp3" target="_blank" rel="noopener">GitHub</a>
@@ -1138,7 +1156,10 @@
                         </div>
                     </article>
                     <article class="help-project">
-                        <strong>Popcornana</strong>
+                        <div class="help-project-head">
+                            <img class="help-project-icon" src="assets/icons/popcornana.png" alt="" aria-hidden="true">
+                            <strong>Popcornana</strong>
+                        </div>
                         <p>Application de gestion de vidéothèque locale.</p>
                         <div class="help-links">
                             <a href="https://github.com/mrklm/Popcornana" target="_blank" rel="noopener">GitHub</a>
@@ -1146,7 +1167,10 @@
                         </div>
                     </article>
                     <article class="help-project">
-                        <strong>warpocalypse</strong>
+                        <div class="help-project-head">
+                            <img class="help-project-icon" src="assets/icons/warpocalypse.png" alt="" aria-hidden="true">
+                            <strong>warpocalypse</strong>
+                        </div>
                         <p>Outil audio expérimental pour fragmenter, transformer et recomposer des sons.</p>
                         <div class="help-links">
                             <a href="https://github.com/mrklm/warpocalypse" target="_blank" rel="noopener">GitHub</a>
@@ -1154,15 +1178,21 @@
                         </div>
                     </article>
                     <article class="help-project">
-                        <strong>edirep</strong>
-                        <p>Outil d'édition et d'organisation de contenus ou répertoires.</p>
+                        <div class="help-project-head">
+                            <img class="help-project-icon" src="assets/icons/edirep.png" alt="" aria-hidden="true">
+                            <strong>edirep</strong>
+                        </div>
+                        <p>Outil d'édition et d'organisation de répertoires téléphoniques.</p>
                         <div class="help-links">
                             <a href="https://github.com/mrklm/edirep" target="_blank" rel="noopener">GitHub</a>
                             <a href="https://github.com/mrklm/edirep/releases" target="_blank" rel="noopener">Releases</a>
                         </div>
                     </article>
                     <article class="help-project">
-                        <strong>garage</strong>
+                        <div class="help-project-head">
+                            <img class="help-project-icon" src="assets/icons/garage.png" alt="" aria-hidden="true">
+                            <strong>garage</strong>
+                        </div>
                         <p>Application de suivi d'entretien de véhicule.</p>
                         <div class="help-links">
                             <a href="https://github.com/mrklm/garage" target="_blank" rel="noopener">GitHub</a>
@@ -1170,7 +1200,10 @@
                         </div>
                     </article>
                     <article class="help-project">
-                        <strong>vaso-shop</strong>
+                        <div class="help-project-head">
+                            <img class="help-project-icon" src="assets/icons/vaso-shop.png" alt="" aria-hidden="true">
+                            <strong>vaso-shop</strong>
+                        </div>
                         <p>Boutique de vases en génération aléatoire imprimés en 3D.</p>
                         <div class="help-links">
                             <a href="https://github.com/mrklm/vaso-shop" target="_blank" rel="noopener">GitHub</a>
@@ -1330,12 +1363,12 @@
             "[Pouêt] Compagnie Créole": { BG: "#8B3A1A", PANEL: "#F2C94C", FIELD: "#FFFFFF", FG: "#5A2E0C", FIELD_FG: "#5A2E0C", ACCENT: "#8B3A1A" }
         };
 
-        const STORAGE_KEY = "surveillant-v1.8.38-settings";
+        const STORAGE_KEY = "surveillant-v1.8.39-settings";
         const CAPTURE_PROXY_ENDPOINT = "http://127.0.0.1:8787/capture";
         const CAPTURE_DIRECTORY_DB = "surveillant-captures";
         const CAPTURE_DIRECTORY_STORE = "handles";
         const CAPTURE_DIRECTORY_KEY = "capture-directory";
-        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.37-settings", "surveillant-v1.8.36-settings", "surveillant-v1.8.35-settings", "surveillant-v1.8.34-settings", "surveillant-v1.8.33-settings", "surveillant-v1.8.32-settings", "surveillant-v1.8.31-settings", "surveillant-v1.8.30-settings", "surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
+        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.38-settings", "surveillant-v1.8.37-settings", "surveillant-v1.8.36-settings", "surveillant-v1.8.35-settings", "surveillant-v1.8.34-settings", "surveillant-v1.8.33-settings", "surveillant-v1.8.32-settings", "surveillant-v1.8.31-settings", "surveillant-v1.8.30-settings", "surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
         const DEFAULT_THEME = "[Sombre] Midnight Garage";
         const DEFAULT_STREAM_PATH = "/stream";
         const DEFAULT_CAPTURE_PATH = "/capture";
@@ -2709,7 +2742,7 @@
             const payload = {
                 app: "Surveillant",
                 format: "surveillant-settings",
-                version: "1.8.38",
+                version: "1.8.39",
                 exportedAt: new Date().toISOString(),
                 settings
             };

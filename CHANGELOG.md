@@ -1,5 +1,14 @@
 # Changelog
 
+## Surveillant v1.8.39 - 2026-08-04
+
+- Ajout des icônes locales des projets cités dans la section `À propos` de l'aide.
+- Intégration des icônes devant chaque logiciel open source listé.
+- Ajout du dossier `assets/icons/` pour conserver ces images dans le dépôt.
+- Incrémentation de la version affichée vers `Surveillant v1.8.39`.
+- Migration des réglages depuis `surveillant-v1.8.38-settings` vers `surveillant-v1.8.39-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.39.html`.
+
 ## Surveillant v1.8.38 - 2026-08-04
 
 - Ajout d'une section `À propos` à la fin de l'aide intégrée.
