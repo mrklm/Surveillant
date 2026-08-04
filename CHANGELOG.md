@@ -1,5 +1,18 @@
 # Changelog
 
+## Surveillant v1.8.33 - 2026-08-04
+
+- Suppression des cameras preconfigurees par defaut pour la version publique.
+- Conservation d'une camera vide par defaut afin de guider la premiere saisie dans le menu.
+- Remplacement du message `Aucune camera assignee` par une invite de premiere configuration.
+- Ajout d'un tutoriel de demarrage en popup, decoupe en plusieurs etapes.
+- Ajout de l'option `Ne plus ouvrir au demarrage` pour le tutoriel.
+- Documentation du tutoriel dans l'aide integree et le README.
+- Verification que les fichiers `Config_Surveillant_*.json` restent ignores par Git.
+- Incrementation de la version affichee vers `Surveillant v1.8.33`.
+- Migration des reglages depuis `surveillant-v1.8.32-settings` vers `surveillant-v1.8.33-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.33.html`.
+
 ## Surveillant v1.8.32 - 2026-08-04
 
 - Ajout de deux boutons `Sauver` et `Charger` la configuration dans le menu.
