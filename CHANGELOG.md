@@ -1,5 +1,18 @@
 # Changelog
 
+## Surveillant v1.8.34 - 2026-08-04
+
+- Uniformisation des textes utilisateur en vouvoiement.
+- Ajout d'un lien officiel vers le telechargement de l'IDE Arduino dans la premiere etape du tutoriel.
+- Ajout d'une etape `Branchez l'ESP32-CAM a votre ordinateur`, illustree par `screenshots/screenshot3.png`.
+- Ajout d'une etape `Selectionnez la carte`, illustree par `screenshots/screenshot4.png`.
+- Ajout d'une etape `Selectionnez le port`, illustree par `screenshots/screenshot5.png`.
+- Passage du tutoriel de 5 a 8 etapes.
+- Mise a jour du README avec les captures de tutoriel.
+- Incrementation de la version affichee vers `Surveillant v1.8.34`.
+- Migration des reglages depuis `surveillant-v1.8.33-settings` vers `surveillant-v1.8.34-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.34.html`.
+
 ## Surveillant v1.8.33 - 2026-08-04
 
 - Suppression des cameras preconfigurees par defaut pour la version publique.

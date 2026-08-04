@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surveillant v1.8.32</title>
+    <title>Surveillant v1.8.34</title>
     <link rel="icon" type="image/png" href="surveillant.png">
     <style>
         :root {
@@ -571,6 +571,75 @@
             width: min(96vw, 900px);
         }
 
+        .setup-dialog {
+            width: min(96vw, 760px);
+        }
+
+        .setup-step {
+            display: none;
+            gap: 10px;
+        }
+
+        .setup-step.is-active {
+            display: grid;
+        }
+
+        .setup-step h2 {
+            color: var(--fg);
+        }
+
+        .setup-step-list {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .setup-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: #050607;
+        }
+
+        .setup-progress {
+            color: var(--muted);
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .setup-footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .setup-dismiss {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+
+        .setup-dismiss input {
+            width: auto;
+            min-height: 0;
+        }
+
+        .empty-camera {
+            display: grid;
+            gap: 10px;
+            padding: 14px;
+        }
+
+        .empty-camera h2 {
+            color: var(--fg);
+        }
+
         .help-content {
             display: grid;
             gap: 14px;
@@ -778,7 +847,7 @@
     <header>
         <div class="brand" onclick="toggleSurveillanceMode()" title="Mode Surveillance" aria-label="Mode Surveillance" role="button" tabindex="0">
             <img class="app-icon" src="surveillant.png" alt="" aria-hidden="true">
-            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.32</span></h1>
+            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.34</span></h1>
         </div>
         <span class="clock" id="clock">--/--/---- --:--:--</span>
         <div class="toolbar">
@@ -913,7 +982,7 @@
                         <button class="btn-main" type="button" onclick="addCameraFromForm()">Ajouter</button>
                     </div>
                 </div>
-                <p class="hint">Renseigne uniquement les IP des caméras à afficher. Utilise Ajouter pour créer une caméra personnalisée.</p>
+                <p class="hint">Renseignez uniquement les IP des caméras à afficher. Utilisez Ajouter pour créer une caméra personnalisée.</p>
             </div>
 
             <div class="dialog-actions">
@@ -937,6 +1006,7 @@
             <section class="help-section">
                 <h2>Utilisation rapide</h2>
                 <ul>
+                    <li>Au premier lancement, suivez le tutoriel pour préparer une ESP32-CAM puis renseigner son IP.</li>
                     <li>Ouvrez <strong>Menu</strong> pour renseigner les IP et les libellés des caméras.</li>
                     <li>Le champ <strong>Chemin du flux</strong> vaut généralement <code>/stream</code>.</li>
                     <li>Le réglage <strong>Fréquence de maj</strong> active un rafraîchissement automatique décalé des flux.</li>
@@ -977,7 +1047,7 @@
                 <p>La vignette est centrée dans un cadre noir au format 4:3. L'iframe part d'une base 320×240 puis Surveillant la met à l'échelle selon la taille disponible, afin d'éviter les barres blanches du rendu navigateur.</p>
 
                 <h3>Configuration</h3>
-                <p>Le menu alimente une liste compacte de 9 emplacements caméra, présentés en lignes avec couleur, IP et libellé. Une caméra n'apparait que si son IP est renseignée. La rotation, le miroir, le thème, les libellés, le chemin du flux, le chemin de capture, la fréquence de rafraîchissement, le délai entre caméras, l'agencement et le format de date sont sauvegardés localement dans <code>localStorage</code>.</p>
+                <p>Le menu presente une camera vide par defaut, puis permet d'ajouter autant de cameras que necessaire avec une couleur, une IP et un libelle. Une camera n'apparait dans la grille que si son IP est renseignée. La rotation, le miroir, le thème, les libellés, le chemin du flux, le chemin de capture, la fréquence de rafraîchissement, le délai entre caméras, l'agencement, le format de date et le choix d'affichage du tutoriel sont sauvegardés localement dans <code>localStorage</code>.</p>
 
                 <h3>Horodatage</h3>
                 <p>L'horloge du haut est formatée en JavaScript avec <code>toLocaleString("fr-FR")</code>. Le menu permet de choisir entre un format court numérique et un format long avec le jour de la semaine et le mois en toutes lettres. Les noms de fichiers de capture gardent volontairement un format technique <code>YYYY-MM-DD_HH-MM-SS</code>, plus fiable pour le tri et compatible avec les systèmes de fichiers.</p>
@@ -997,6 +1067,111 @@
                 <h3>Sécurité</h3>
                 <p>Cette page ne protège pas les caméras : elle pilote des URLs HTTP locales. Toute personne connectée au même réseau peut potentiellement appeler les mêmes URLs directement. La vraie sécurité repose sur le Wi-Fi, l'absence de redirection de port, un réseau invité isolé et, idéalement, un réseau IoT séparé ou un accès VPN pour l'extérieur.</p>
             </section>
+        </div>
+    </dialog>
+
+    <dialog class="setup-dialog" id="setup-dialog">
+        <div class="dialog-head">
+            <strong>Premiere configuration</strong>
+            <button class="btn-menu" type="button" onclick="closeSetupTutorial()">Fermer</button>
+        </div>
+        <div class="dialog-body">
+            <div class="setup-progress" id="setup-progress">Etape 1 / 8</div>
+
+            <section class="setup-step is-active">
+                <h2>1. Installer l'environnement Arduino</h2>
+                <p>Installez l'IDE Arduino, puis ajoutez la prise en charge des cartes ESP32 par Espressif depuis le gestionnaire de cartes.</p>
+                <p><a href="https://www.arduino.cc/en/software" target="_blank" rel="noopener">Telecharger l'IDE Arduino depuis le site officiel</a></p>
+                <ul class="setup-step-list">
+                    <li>Ouvrez l'IDE Arduino.</li>
+                    <li>Ajoutez le support ESP32 Espressif.</li>
+                    <li>Selectionnez une carte compatible ESP32-CAM, par exemple AI Thinker ESP32-CAM si c'est votre module.</li>
+                </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>2. Preparer le sketch ESP32-CAM</h2>
+                <p>Ouvrez le fichier <code>surveillant_esp32cam.ino</code>, puis renseignez les informations propres a votre reseau.</p>
+                <ul class="setup-step-list">
+                    <li>Remplacez <code>ssid</code> par le nom de votre reseau Wi-Fi.</li>
+                    <li>Remplacez <code>password</code> par le mot de passe Wi-Fi.</li>
+                    <li>Choisissez le dernier nombre de l'IP avec <code>local_IP[3]</code>.</li>
+                </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>3. Brancher l'ESP32-CAM a l'ordinateur</h2>
+                <p>Branchez l'ESP32-CAM a votre ordinateur avec l'adaptateur ou le programmateur adapte a votre module.</p>
+                <img class="setup-image" src="screenshots/screenshot3.png" alt="ESP32-CAM branchee a un ordinateur">
+                <ul class="setup-step-list">
+                    <li>Utilisez un cable USB capable de transporter des donnees.</li>
+                    <li>Verifiez que le module est correctement alimente.</li>
+                    <li>Si votre carte le demande, placez-la en mode televersement avant d'envoyer le sketch.</li>
+                </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>4. Attribuer une IP a la camera</h2>
+                <p>La ligne <code>local_IP[3] = 10;</code> donne le dernier nombre de l'adresse IP. Sur un reseau <code>192.168.1.x</code>, cela donne <code>192.168.1.10</code>.</p>
+                <ul class="setup-step-list">
+                    <li>Utilisez un numero different pour chaque ESP32-CAM.</li>
+                    <li>Reservez idealement cette IP dans votre box pour eviter les conflits.</li>
+                    <li>Notez l'IP choisie : vous devrez la reporter dans Surveillant.</li>
+                </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>5. Selectionner la carte</h2>
+                <p>Dans l'IDE Arduino, selectionnez le type de carte correspondant a votre ESP32-CAM.</p>
+                <img class="setup-image" src="screenshots/screenshot4.png" alt="Selection de la carte ESP32-CAM dans l'IDE Arduino">
+                <ul class="setup-step-list">
+                    <li>Ouvrez le menu de selection des cartes.</li>
+                    <li>Choisissez une carte compatible avec votre module.</li>
+                    <li>Pour beaucoup de modules ESP32-CAM classiques, le choix <code>AI Thinker ESP32-CAM</code> convient.</li>
+                </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>6. Selectionner le port</h2>
+                <p>Selectionnez le port serie utilise par l'ESP32-CAM ou par son programmateur USB.</p>
+                <img class="setup-image" src="screenshots/screenshot5.png" alt="Selection du port serie dans l'IDE Arduino">
+                <ul class="setup-step-list">
+                    <li>Ouvrez le menu des ports.</li>
+                    <li>Choisissez le port qui apparait quand l'ESP32-CAM est branchee.</li>
+                    <li>Si aucun port n'apparait, verifiez le cable USB, le pilote serie et le mode de televersement.</li>
+                </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>7. Televerser et redemarrer</h2>
+                <p>Televersez le sketch dans l'ESP32-CAM, puis redemarrez le module. Quand l'ESP32-CAM est connectee au Wi-Fi, elle expose les routes utilisees par Surveillant.</p>
+                <ul class="setup-step-list">
+                    <li><code>/stream</code> pour le flux video.</li>
+                    <li><code>/capture</code> pour les captures si le firmware le propose.</li>
+                    <li><code>/led/on</code> et <code>/led/off</code> pour la LED.</li>
+                </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>8. Ajouter la camera dans Surveillant</h2>
+                <p>Ouvrez le menu de Surveillant, renseignez l'IP de la camera, puis ajoutez si besoin une couleur et un libelle pour l'identifier facilement.</p>
+                <ul class="setup-step-list">
+                    <li>Entrez l'IP choisie, par exemple <code>192.168.1.10</code>.</li>
+                    <li>Ajoutez un libelle utile, comme une piece ou une zone.</li>
+                    <li>Enregistrez, puis verifiez que le flux apparait dans la grille.</li>
+                </ul>
+            </section>
+
+            <div class="setup-footer">
+                <label class="setup-dismiss">
+                    <input id="setup-dismiss" type="checkbox">
+                    Ne plus ouvrir au demarrage
+                </label>
+                <div class="dialog-actions">
+                    <button class="btn-menu" id="setup-prev" type="button" onclick="previousSetupStep()">Precedent</button>
+                    <button class="btn-main" id="setup-next" type="button" onclick="nextSetupStep()">Suivant</button>
+                </div>
+            </div>
         </div>
     </dialog>
 
@@ -1020,12 +1195,12 @@
             "[Pouêt] Compagnie Créole": { BG: "#8B3A1A", PANEL: "#F2C94C", FIELD: "#FFFFFF", FG: "#5A2E0C", FIELD_FG: "#5A2E0C", ACCENT: "#8B3A1A" }
         };
 
-        const STORAGE_KEY = "surveillant-v1.8.32-settings";
+        const STORAGE_KEY = "surveillant-v1.8.34-settings";
         const CAPTURE_PROXY_ENDPOINT = "http://127.0.0.1:8787/capture";
         const CAPTURE_DIRECTORY_DB = "surveillant-captures";
         const CAPTURE_DIRECTORY_STORE = "handles";
         const CAPTURE_DIRECTORY_KEY = "capture-directory";
-        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.31-settings", "surveillant-v1.8.30-settings", "surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
+        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.33-settings", "surveillant-v1.8.32-settings", "surveillant-v1.8.31-settings", "surveillant-v1.8.30-settings", "surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
         const DEFAULT_THEME = "[Sombre] Midnight Garage";
         const DEFAULT_STREAM_PATH = "/stream";
         const DEFAULT_CAPTURE_PATH = "/capture";
@@ -1033,21 +1208,18 @@
         const DEFAULT_STAGGER_DELAY_MS = 1200;
         const DEFAULT_DATE_FORMAT = "long";
         const DEFAULT_CAMERA_SLOTS = [
-            { id: "blanche", name: "Caméra Blanche", ip: "192.168.1.2", color: "#f8fafc" },
-            { id: "verte", name: "Caméra Verte", ip: "192.168.1.4", color: "#4ade80" },
-            { id: "bleue", name: "Caméra Bleue", ip: "192.168.1.7", color: "#60a5fa" },
-            { id: "orange", name: "Caméra Orange", ip: "192.168.1.8", color: "#fb923c" },
-            { id: "jaune", name: "Caméra Jaune", ip: "192.168.1.5", color: "#fde047" },
-            { id: "rouge", name: "Caméra Rouge", ip: "192.168.1.3", color: "#f87171" },
-            { id: "violette", name: "Caméra Violette", ip: "192.168.1.6", color: "#c084fc" },
-            { id: "cyan", name: "Caméra Cyan", ip: "192.168.1.9", color: "#22d3ee" },
-            { id: "turquoise", name: "Caméra Turquoise", ip: "192.168.1.10", color: "#14b8a6" }
+            { id: "camera-1", name: "Caméra 1", ip: "", color: "#38bdf8" }
         ];
 
         const grid = document.getElementById("camera-grid");
         const clock = document.getElementById("clock");
         const menuDialog = document.getElementById("menu-dialog");
         const helpDialog = document.getElementById("help-dialog");
+        const setupDialog = document.getElementById("setup-dialog");
+        const setupProgress = document.getElementById("setup-progress");
+        const setupDismiss = document.getElementById("setup-dismiss");
+        const setupPrev = document.getElementById("setup-prev");
+        const setupNext = document.getElementById("setup-next");
         const cameraDialog = document.getElementById("camera-dialog");
         const cameraDialogTitle = document.getElementById("camera-dialog-title");
         const cameraDialogStream = document.getElementById("camera-dialog-stream");
@@ -1083,6 +1255,8 @@
         let ledRestartTimers = new Map();
         let messageTimers = new Map();
         let editedCameraId = null;
+        let setupStepIndex = 0;
+        let setupCloseHandled = false;
 
         function loadSettings() {
             const defaults = {
@@ -1093,6 +1267,7 @@
                 refreshIntervalSeconds: DEFAULT_REFRESH_INTERVAL_SECONDS,
                 staggerDelayMs: DEFAULT_STAGGER_DELAY_MS,
                 dateFormat: DEFAULT_DATE_FORMAT,
+                setupTutorialDismissed: false,
                 cameras: DEFAULT_CAMERA_SLOTS.map(normalizeCameraSetting)
             };
 
@@ -1110,6 +1285,7 @@
                     refreshIntervalSeconds: Number(saved.refreshIntervalSeconds ?? DEFAULT_REFRESH_INTERVAL_SECONDS),
                     staggerDelayMs: Number(saved.staggerDelayMs ?? DEFAULT_STAGGER_DELAY_MS),
                     dateFormat: cleanDateFormat(saved.dateFormat),
+                    setupTutorialDismissed: Boolean(saved.setupTutorialDismissed),
                     cameras: mergeSavedCameras(saved.cameras)
                 };
             } catch {
@@ -1535,7 +1711,16 @@
             if (cameras.length === 0) {
                 const empty = document.createElement("article");
                 empty.className = "camera";
-                empty.innerHTML = '<div class="camera-head"><div><h2>Aucune caméra assignée</h2><div class="camera-ip">Ouvre le menu pour renseigner une IP.</div></div></div>';
+                empty.innerHTML = `
+                    <div class="empty-camera">
+                        <h2>Premiere configuration</h2>
+                        <p class="hint">Commence par preparer une ESP32-CAM, puis ajoute son IP dans le menu de Surveillant.</p>
+                        <div class="dialog-actions">
+                            <button class="btn-main" type="button" onclick="openSetupTutorial(true)">Ouvrir le tutoriel</button>
+                            <button class="btn-menu" type="button" onclick="openMenu()">Ouvrir le menu</button>
+                        </div>
+                    </div>
+                `;
                 grid.appendChild(empty);
                 return;
             }
@@ -2287,6 +2472,53 @@
             helpDialog.close();
         }
 
+        function openSetupTutorial(force = false) {
+            if (!force && settings.setupTutorialDismissed) {
+                return;
+            }
+
+            setupStepIndex = 0;
+            setupDismiss.checked = Boolean(settings.setupTutorialDismissed);
+            renderSetupStep();
+            if (!setupDialog.open) {
+                setupDialog.showModal();
+            }
+        }
+
+        function closeSetupTutorial() {
+            setupCloseHandled = true;
+            if (setupDismiss.checked) {
+                settings.setupTutorialDismissed = true;
+                persistSettings();
+            }
+            setupDialog.close();
+        }
+
+        function renderSetupStep() {
+            const steps = [...setupDialog.querySelectorAll(".setup-step")];
+            steps.forEach((step, index) => step.classList.toggle("is-active", index === setupStepIndex));
+            setupProgress.textContent = `Etape ${setupStepIndex + 1} / ${steps.length}`;
+            setupPrev.disabled = setupStepIndex === 0;
+            setupNext.textContent = setupStepIndex === steps.length - 1 ? "Terminer" : "Suivant";
+        }
+
+        function previousSetupStep() {
+            setupStepIndex = Math.max(0, setupStepIndex - 1);
+            renderSetupStep();
+        }
+
+        function nextSetupStep() {
+            const steps = setupDialog.querySelectorAll(".setup-step");
+            if (setupStepIndex >= steps.length - 1) {
+                closeSetupTutorial();
+                openMenu();
+                return;
+            }
+
+            setupStepIndex += 1;
+            renderSetupStep();
+        }
+
         function toggleSurveillanceMode() {
             surveillanceMode = !surveillanceMode;
             document.body.classList.toggle("surveillance-mode", surveillanceMode);
@@ -2302,6 +2534,7 @@
                 refreshIntervalSeconds: Number(refreshIntervalSelect.value),
                 staggerDelayMs: Number(staggerDelaySelect.value),
                 dateFormat: cleanDateFormat(dateFormatSelect.value),
+                setupTutorialDismissed: Boolean(settings.setupTutorialDismissed),
                 cameras: settings.cameras.map(slot => {
                     const input = document.querySelector(`[data-camera-id="${slot.id}"]`);
                     const labelInput = document.querySelector(`[data-camera-label-id="${slot.id}"]`);
@@ -2341,7 +2574,7 @@
             const payload = {
                 app: "Surveillant",
                 format: "surveillant-settings",
-                version: "1.8.32",
+                version: "1.8.34",
                 exportedAt: new Date().toISOString(),
                 settings
             };
@@ -2402,6 +2635,7 @@
                 refreshIntervalSeconds: Number(source.refreshIntervalSeconds ?? DEFAULT_REFRESH_INTERVAL_SECONDS),
                 staggerDelayMs: Number(source.staggerDelayMs ?? DEFAULT_STAGGER_DELAY_MS),
                 dateFormat: cleanDateFormat(source.dateFormat),
+                setupTutorialDismissed: Boolean(source.setupTutorialDismissed),
                 cameras: importedCameras
             };
         }
@@ -2455,6 +2689,22 @@
         restoreCaptureDirectory();
         scheduleAutoRefresh();
         updateClock();
+        setupDialog.addEventListener("close", () => {
+            if (setupCloseHandled) {
+                setupCloseHandled = false;
+                return;
+            }
+
+            if (setupDismiss.checked) {
+                settings.setupTutorialDismissed = true;
+                persistSettings();
+            }
+        });
+        requestAnimationFrame(() => {
+            if (getActiveCameras().length === 0) {
+                openSetupTutorial();
+            }
+        });
         setInterval(updateClock, 1000);
         document.querySelector(".brand").addEventListener("keydown", event => {
             if (event.key === "Enter" || event.key === " ") {

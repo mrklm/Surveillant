@@ -2,7 +2,7 @@
 
 Surveillant est une page HTML autonome permettant de recuperer, afficher et piloter un ou plusieurs flux video ESP32-CAM sur un reseau local.
 
-La version actuelle est `v1.8.33`.
+La version actuelle est `v1.8.34`.
 
 ## Apercu
 
@@ -27,7 +27,7 @@ La version actuelle est `v1.8.33`.
 
 ## Fichiers
 
-- `surveillant-v1.8.33.html` : application principale.
+- `surveillant-v1.8.34.html` : application principale.
 - `surveillant.png` : logo et favicon.
 - `surveillant_off.png` : image affichee quand un flux video est indisponible.
 - `capture-proxy.js` : proxy local optionnel pour contourner certains blocages CORS lors des captures.
@@ -37,7 +37,7 @@ La version actuelle est `v1.8.33`.
 
 ## Utilisation
 
-Ouvrir `surveillant-v1.8.33.html` dans un navigateur.
+Ouvrir `surveillant-v1.8.34.html` dans un navigateur.
 
 Dans le menu :
 
@@ -51,6 +51,12 @@ Dans le menu :
 Les reglages sont conserves dans le navigateur avec `localStorage`.
 
 Au premier lancement, aucune camera n'est preconfiguree. Si aucune IP n'est renseignee, Surveillant affiche un tutoriel de premiere configuration en plusieurs etapes pour preparer une ESP32-CAM, televerser le sketch, choisir une IP puis ajouter la camera dans le menu.
+
+Le tutoriel integre aussi des captures d'aide :
+
+- `screenshots/screenshot3.png` : branchement de l'ESP32-CAM ;
+- `screenshots/screenshot4.png` : selection de la carte dans l'IDE Arduino ;
+- `screenshots/screenshot5.png` : selection du port dans l'IDE Arduino.
 
 ## Sauvegarde De Configuration
 
