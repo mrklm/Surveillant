@@ -1,5 +1,14 @@
 # Changelog
 
+## Surveillant v1.8.36 - 2026-08-04
+
+- Ajout des accents manquants dans les textes visibles du tutoriel de première configuration.
+- Simplification de la page de fin du tutoriel avec le message : `Reportez-vous à la section aide si besoin, bonne utilisation !`.
+- Correction du message de première configuration affiché dans la grille pour conserver le vouvoiement.
+- Incrémentation de la version affichée vers `Surveillant v1.8.36`.
+- Migration des réglages depuis `surveillant-v1.8.35-settings` vers `surveillant-v1.8.36-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.36.html`.
+
 ## Surveillant v1.8.35 - 2026-08-04
 
 - Ajout d'une page d'accueil au tutoriel de premiere configuration avec le logo Surveillant.

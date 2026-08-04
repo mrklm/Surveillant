@@ -2,7 +2,7 @@
 
 Surveillant est une page HTML autonome permettant de recuperer, afficher et piloter un ou plusieurs flux video ESP32-CAM sur un reseau local.
 
-La version actuelle est `v1.8.35`.
+La version actuelle est `v1.8.36`.
 
 ## Apercu
 
@@ -27,7 +27,7 @@ La version actuelle est `v1.8.35`.
 
 ## Fichiers
 
-- `surveillant-v1.8.35.html` : application principale.
+- `surveillant-v1.8.36.html` : application principale.
 - `surveillant.png` : logo et favicon.
 - `surveillant_off.png` : image affichee quand un flux video est indisponible.
 - `capture-proxy.js` : proxy local optionnel pour contourner certains blocages CORS lors des captures.
@@ -37,7 +37,7 @@ La version actuelle est `v1.8.35`.
 
 ## Utilisation
 
-Ouvrir `surveillant-v1.8.35.html` dans un navigateur.
+Ouvrir `surveillant-v1.8.36.html` dans un navigateur.
 
 Dans le menu :
 
