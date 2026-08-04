@@ -1,5 +1,17 @@
 # Changelog
 
+## Surveillant v1.8.35 - 2026-08-04
+
+- Ajout d'une page d'accueil au tutoriel de premiere configuration avec le logo Surveillant.
+- Ajout d'une etape expliquant ou renseigner l'URL Espressif dans les preferences de l'IDE Arduino.
+- Ajout du lien officiel de l'IDE Arduino : `https://www.arduino.cc/en/software`.
+- Ajout d'une etape finale indiquant que le tutoriel est termine et que l'utilisateur sera dirige vers le menu.
+- Passage du tutoriel de 8 a 11 pages.
+- Mise a jour du README avec le nouveau deroule du tutoriel.
+- Incrementation de la version affichee vers `Surveillant v1.8.35`.
+- Migration des reglages depuis `surveillant-v1.8.34-settings` vers `surveillant-v1.8.35-settings`.
+- Renommage du fichier HTML en `surveillant-v1.8.35.html`.
+
 ## Surveillant v1.8.34 - 2026-08-04
 
 - Uniformisation des textes utilisateur en vouvoiement.

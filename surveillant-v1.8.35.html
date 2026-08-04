@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surveillant v1.8.33</title>
+    <title>Surveillant v1.8.35</title>
     <link rel="icon" type="image/png" href="surveillant.png">
     <style>
         :root {
@@ -593,6 +593,21 @@
             padding-left: 20px;
         }
 
+        .setup-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: #050607;
+        }
+
+        .setup-logo {
+            width: min(48vw, 220px);
+            justify-self: center;
+            object-fit: contain;
+        }
+
         .setup-progress {
             color: var(--muted);
             font-size: 0.82rem;
@@ -838,7 +853,7 @@
     <header>
         <div class="brand" onclick="toggleSurveillanceMode()" title="Mode Surveillance" aria-label="Mode Surveillance" role="button" tabindex="0">
             <img class="app-icon" src="surveillant.png" alt="" aria-hidden="true">
-            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.33</span></h1>
+            <h1 class="brand-title"><span class="brand-name">Surveillant</span><span class="brand-version">v1.8.35</span></h1>
         </div>
         <span class="clock" id="clock">--/--/---- --:--:--</span>
         <div class="toolbar">
@@ -973,7 +988,7 @@
                         <button class="btn-main" type="button" onclick="addCameraFromForm()">Ajouter</button>
                     </div>
                 </div>
-                <p class="hint">Renseigne uniquement les IP des caméras à afficher. Utilise Ajouter pour créer une caméra personnalisée.</p>
+                <p class="hint">Renseignez uniquement les IP des caméras à afficher. Utilisez Ajouter pour créer une caméra personnalisée.</p>
             </div>
 
             <div class="dialog-actions">
@@ -1067,41 +1082,93 @@
             <button class="btn-menu" type="button" onclick="closeSetupTutorial()">Fermer</button>
         </div>
         <div class="dialog-body">
-            <div class="setup-progress" id="setup-progress">Etape 1 / 5</div>
+            <div class="setup-progress" id="setup-progress">Etape 1 / 11</div>
 
             <section class="setup-step is-active">
+                <img class="setup-logo" src="surveillant.png" alt="Surveillant">
+                <h2>Bienvenue</h2>
+                <p>Bienvenue, voici un tutoriel explicatif afin de vous guider dans l'utilisation de Surveillant.</p>
+                <p>Les prochaines etapes vous accompagnent depuis la preparation de l'ESP32-CAM jusqu'a l'ajout de votre premiere camera dans le menu.</p>
+            </section>
+
+            <section class="setup-step">
                 <h2>1. Installer l'environnement Arduino</h2>
-                <p>Installe l'IDE Arduino, puis ajoute la prise en charge des cartes ESP32 par Espressif depuis le gestionnaire de cartes.</p>
+                <p>Installez l'IDE Arduino, puis ajoutez la prise en charge des cartes ESP32 par Espressif depuis le gestionnaire de cartes.</p>
+                <p><a href="https://www.arduino.cc/en/software" target="_blank" rel="noopener">Telecharger l'IDE Arduino depuis le site officiel</a></p>
                 <ul class="setup-step-list">
-                    <li>Ouvre l'IDE Arduino.</li>
-                    <li>Ajoute le support ESP32 Espressif.</li>
-                    <li>Selectionne une carte compatible ESP32-CAM, par exemple AI Thinker ESP32-CAM si c'est ton module.</li>
+                    <li>Ouvrez l'IDE Arduino.</li>
+                    <li>Ajoutez le support ESP32 Espressif.</li>
+                    <li>Selectionnez une carte compatible ESP32-CAM, par exemple AI Thinker ESP32-CAM si c'est votre module.</li>
                 </ul>
             </section>
 
             <section class="setup-step">
-                <h2>2. Preparer le sketch ESP32-CAM</h2>
-                <p>Ouvre le fichier <code>surveillant_esp32cam.ino</code>, puis renseigne les informations propres a ton reseau.</p>
+                <h2>2. Ajouter l'URL Espressif</h2>
+                <p>Dans les preferences de l'IDE Arduino, ajoutez l'URL officielle du gestionnaire de cartes ESP32 Espressif dans le champ des URLs additionnelles.</p>
+                <p><code>https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</code></p>
                 <ul class="setup-step-list">
-                    <li>Remplace <code>ssid</code> par le nom de ton reseau Wi-Fi.</li>
-                    <li>Remplace <code>password</code> par le mot de passe Wi-Fi.</li>
-                    <li>Choisis le dernier nombre de l'IP avec <code>local_IP[3]</code>.</li>
+                    <li>Ouvrez les preferences de l'IDE Arduino.</li>
+                    <li>Reperez le champ des URLs additionnelles de gestionnaire de cartes.</li>
+                    <li>Collez l'URL Espressif, puis validez.</li>
                 </ul>
             </section>
 
             <section class="setup-step">
-                <h2>3. Attribuer une IP a la camera</h2>
+                <h2>3. Preparer le sketch ESP32-CAM</h2>
+                <p>Ouvrez le fichier <code>surveillant_esp32cam.ino</code>, puis renseignez les informations propres a votre reseau.</p>
+                <ul class="setup-step-list">
+                    <li>Remplacez <code>ssid</code> par le nom de votre reseau Wi-Fi.</li>
+                    <li>Remplacez <code>password</code> par le mot de passe Wi-Fi.</li>
+                    <li>Choisissez le dernier nombre de l'IP avec <code>local_IP[3]</code>.</li>
+                </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>4. Brancher l'ESP32-CAM a l'ordinateur</h2>
+                <p>Branchez l'ESP32-CAM a votre ordinateur avec l'adaptateur ou le programmateur adapte a votre module.</p>
+                <img class="setup-image" src="screenshots/screenshot3.png" alt="ESP32-CAM branchee a un ordinateur">
+                <ul class="setup-step-list">
+                    <li>Utilisez un cable USB capable de transporter des donnees.</li>
+                    <li>Verifiez que le module est correctement alimente.</li>
+                    <li>Si votre carte le demande, placez-la en mode televersement avant d'envoyer le sketch.</li>
+                </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>5. Attribuer une IP a la camera</h2>
                 <p>La ligne <code>local_IP[3] = 10;</code> donne le dernier nombre de l'adresse IP. Sur un reseau <code>192.168.1.x</code>, cela donne <code>192.168.1.10</code>.</p>
                 <ul class="setup-step-list">
-                    <li>Utilise un numero different pour chaque ESP32-CAM.</li>
-                    <li>Reserve idealement cette IP dans ta box pour eviter les conflits.</li>
-                    <li>Note l'IP choisie : tu devras la reporter dans Surveillant.</li>
+                    <li>Utilisez un numero different pour chaque ESP32-CAM.</li>
+                    <li>Reservez idealement cette IP dans votre box pour eviter les conflits.</li>
+                    <li>Notez l'IP choisie : vous devrez la reporter dans Surveillant.</li>
                 </ul>
             </section>
 
             <section class="setup-step">
-                <h2>4. Televerser et redemarrer</h2>
-                <p>Televerse le sketch dans l'ESP32-CAM, puis redemarre le module. Quand l'ESP32-CAM est connectee au Wi-Fi, elle expose les routes utilisees par Surveillant.</p>
+                <h2>6. Selectionner la carte</h2>
+                <p>Dans l'IDE Arduino, selectionnez le type de carte correspondant a votre ESP32-CAM.</p>
+                <img class="setup-image" src="screenshots/screenshot4.png" alt="Selection de la carte ESP32-CAM dans l'IDE Arduino">
+                <ul class="setup-step-list">
+                    <li>Ouvrez le menu de selection des cartes.</li>
+                    <li>Choisissez une carte compatible avec votre module.</li>
+                    <li>Pour beaucoup de modules ESP32-CAM classiques, le choix <code>AI Thinker ESP32-CAM</code> convient.</li>
+                </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>7. Selectionner le port</h2>
+                <p>Selectionnez le port serie utilise par l'ESP32-CAM ou par son programmateur USB.</p>
+                <img class="setup-image" src="screenshots/screenshot5.png" alt="Selection du port serie dans l'IDE Arduino">
+                <ul class="setup-step-list">
+                    <li>Ouvrez le menu des ports.</li>
+                    <li>Choisissez le port qui apparait quand l'ESP32-CAM est branchee.</li>
+                    <li>Si aucun port n'apparait, verifiez le cable USB, le pilote serie et le mode de televersement.</li>
+                </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>8. Televerser et redemarrer</h2>
+                <p>Televersez le sketch dans l'ESP32-CAM, puis redemarrez le module. Quand l'ESP32-CAM est connectee au Wi-Fi, elle expose les routes utilisees par Surveillant.</p>
                 <ul class="setup-step-list">
                     <li><code>/stream</code> pour le flux video.</li>
                     <li><code>/capture</code> pour les captures si le firmware le propose.</li>
@@ -1110,13 +1177,19 @@
             </section>
 
             <section class="setup-step">
-                <h2>5. Ajouter la camera dans Surveillant</h2>
-                <p>Ouvre le menu de Surveillant, renseigne l'IP de la camera, puis ajoute si besoin une couleur et un libelle pour l'identifier facilement.</p>
+                <h2>9. Ajouter la camera dans Surveillant</h2>
+                <p>Ouvrez le menu de Surveillant, renseignez l'IP de la camera, puis ajoutez si besoin une couleur et un libelle pour l'identifier facilement.</p>
                 <ul class="setup-step-list">
-                    <li>Entre l'IP choisie, par exemple <code>192.168.1.10</code>.</li>
-                    <li>Ajoute un libelle utile, comme une piece ou une zone.</li>
-                    <li>Enregistre, puis verifie que le flux apparait dans la grille.</li>
+                    <li>Entrez l'IP choisie, par exemple <code>192.168.1.10</code>.</li>
+                    <li>Ajoutez un libelle utile, comme une piece ou une zone.</li>
+                    <li>Enregistrez, puis verifiez que le flux apparait dans la grille.</li>
                 </ul>
+            </section>
+
+            <section class="setup-step">
+                <h2>Fin du tutoriel</h2>
+                <p>Le tutoriel est termine.</p>
+                <p>En cliquant sur <strong>Terminer</strong>, vous serez dirige vers le menu afin de commencer la configuration de Surveillant.</p>
             </section>
 
             <div class="setup-footer">
@@ -1152,12 +1225,12 @@
             "[Pouêt] Compagnie Créole": { BG: "#8B3A1A", PANEL: "#F2C94C", FIELD: "#FFFFFF", FG: "#5A2E0C", FIELD_FG: "#5A2E0C", ACCENT: "#8B3A1A" }
         };
 
-        const STORAGE_KEY = "surveillant-v1.8.33-settings";
+        const STORAGE_KEY = "surveillant-v1.8.35-settings";
         const CAPTURE_PROXY_ENDPOINT = "http://127.0.0.1:8787/capture";
         const CAPTURE_DIRECTORY_DB = "surveillant-captures";
         const CAPTURE_DIRECTORY_STORE = "handles";
         const CAPTURE_DIRECTORY_KEY = "capture-directory";
-        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.32-settings", "surveillant-v1.8.31-settings", "surveillant-v1.8.30-settings", "surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
+        const LEGACY_STORAGE_KEYS = ["surveillant-v1.8.34-settings", "surveillant-v1.8.33-settings", "surveillant-v1.8.32-settings", "surveillant-v1.8.31-settings", "surveillant-v1.8.30-settings", "surveillant-v1.8.29-settings", "surveillant-v1.8.28-settings", "surveillant-v1.8.27-settings", "surveillant-v1.8.26-settings", "surveillant-v1.8.25-settings", "surveillant-v1.8.24-settings", "surveillant-v1.8.23-settings", "surveillant-v1.8.22-settings", "surveillant-v1.8.21-settings", "surveillant-v1.8.20-settings", "surveillant-v1.8.19-settings", "surveillant-v1.8.18-settings", "surveillant-v1.8.17-settings", "surveillant-v1.8.16-settings", "surveillant-v1.8.15-settings", "surveillant-v1.8.14-settings", "surveillant-v1.8.13-settings", "surveillant-v1.8.12-settings", "surveillant-v1.8.11-settings", "surveillant-v1.8.10-settings", "surveillant-v1.8.9-settings", "surveillant-v1.8.8-settings", "surveillant-v1.8.7-settings", "surveillant-v1.8.6-settings", "surveillant-v1.8.5-settings", "surveillant-v1.8.4-settings", "surveillant-v1.8.3-settings", "surveillant-v1.8.2-settings", "surveillant-v1.8.1-settings", "surveillant-v1.8.0-settings", "surveillant-v1.7.0-settings", "surveillant-v1.6.0-settings", "surveillant-v1.5.1-settings", "surveillant-v1.5.0-settings", "surveillant-v1.4.1-settings", "surveillant-v1.4.0-settings", "surveillant-v1.3.4-settings", "surveillant-v1.0.0-settings", "klm-surveillant-esp32-cam-v0.1-stream"];
         const DEFAULT_THEME = "[Sombre] Midnight Garage";
         const DEFAULT_STREAM_PATH = "/stream";
         const DEFAULT_CAPTURE_PATH = "/capture";
@@ -2531,7 +2604,7 @@
             const payload = {
                 app: "Surveillant",
                 format: "surveillant-settings",
-                version: "1.8.32",
+                version: "1.8.35",
                 exportedAt: new Date().toISOString(),
                 settings
             };
